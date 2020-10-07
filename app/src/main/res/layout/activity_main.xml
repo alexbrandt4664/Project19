@@ -31,8 +31,7 @@
             android:layout_marginRight="12dp"
             android:layout_marginLeft="12dp"
             android:inputType="text"
-            android:importantForAutofill="no"
-            />
+            android:importantForAutofill="no"/>
 
         <EditText
             android:id="@+id/bName"
@@ -44,8 +43,7 @@
             android:layout_marginRight="12dp"
             android:layout_toEndOf="@+id/aName"
             android:inputType="text"
-            android:importantForAutofill="no"
-            />
+            android:importantForAutofill="no"/>
 
     </RelativeLayout>
 
@@ -59,6 +57,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="@string/start"/>
+            android:onClick="createGame"
+            android:text="@string/start" />
     </FrameLayout>
 </LinearLayout>

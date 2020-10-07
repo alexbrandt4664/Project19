@@ -4,4 +4,7 @@
     <string name="aName">Player A Name</string>
     <string name="bName">Player B Name</string>
     <string name="start">Start Game</string>
+    <string name="aKey">PlayerA</string>
+    <string name="bKey">PlayerB</string>
+    <string name="emptyInput">Make sure both name inputs have been filled</string>
 </resources>

@@ -26,12 +26,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:hint="@string/aName"
+            android:gravity="center"
             android:layout_marginTop="48dp"
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="36dp"
             android:inputType="text"
-            android:importantForAutofill="no"
-            />
+            android:importantForAutofill="no"/>
 
         <EditText
             android:id="@+id/bName"
@@ -43,7 +43,7 @@
             android:layout_marginBottom="24dp"
             android:inputType="text"
             android:importantForAutofill="no"
-            />
+            android:gravity="center"/>
 
         <FrameLayout
             android:id="@+id/btnFrame"
@@ -55,7 +55,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="@string/start"/>
+                android:onClick="createGame"
+                android:text="@string/start" />
         </FrameLayout>
 
     </RelativeLayout>
