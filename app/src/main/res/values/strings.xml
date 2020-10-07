@@ -7,4 +7,12 @@
     <string name="aKey">PlayerA</string>
     <string name="bKey">PlayerB</string>
     <string name="emptyInput">Make sure both name inputs have been filled</string>
+    <string name="winnerKey">Winner</string>
+    <string name="winnerMessage">is the winner!</string>
+    <string name="loserMessage">is the loser...</string>
+    <string name="currentPlayer">\'s Turn</string>
+    <string name="done">Done</string>
+    <string name="resign">Resign</string>
+    <string name="menu">Return to Start Menu</string>
+    <string name="loserKey">Loser</string>
 </resources>
