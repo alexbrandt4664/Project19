@@ -7,60 +7,58 @@
     android:orientation="vertical"
     tools:context=".MainActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/title"
-        android:textSize="45sp"
-        android:layout_gravity="center"
-        android:layout_marginTop="5dp"/>
-
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingLeft="12dp"
-        android:paddingRight="12dp"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="5"
         app:srcCompat="@drawable/board"
+        android:padding="20dp"
         android:contentDescription="@string/title"/>
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="10dp">
+        android:gravity="center"
+        android:layout_weight="1">
 
         <EditText
             android:id="@+id/aName"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="@string/aName"
+            android:layout_height="wrap_content"
+            android:hint="@string/aName"
             android:gravity="center"
-            android:layout_weight="1"
             android:layout_marginRight="12dp"
-            android:layout_marginLeft="12dp"/>
-
+            android:layout_marginLeft="12dp"
+            android:inputType="text"
+            android:importantForAutofill="no"
+            />
 
         <EditText
             android:id="@+id/bName"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_width="wrap_content"
             android:hint="@string/bName"
             android:gravity="center"
-            android:layout_weight="1"
             android:layout_marginLeft="12dp"
-            android:layout_marginRight="12dp"/>
-    </LinearLayout>
+            android:layout_marginRight="12dp"
+            android:layout_toEndOf="@+id/aName"
+            android:inputType="text"
+            android:importantForAutofill="no"
+            />
+
+    </RelativeLayout>
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="0dp"
+        android:layout_marginTop="1dp"
+        android:layout_weight="3">
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="@string/start"
-            android:margin="0dp"/>
+            android:text="@string/start"/>
     </FrameLayout>
 </LinearLayout>
