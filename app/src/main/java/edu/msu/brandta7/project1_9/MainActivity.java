@@ -1,5 +1,6 @@
 package edu.msu.brandta7.project1_9;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -16,6 +17,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
     }
 
+    /**
+     * Function to move the players to the game activity
+     * @param view
+     */
     public void createGame(View view) {
 
         // Read the contents of the user input
@@ -32,5 +37,21 @@ public class MainActivity extends AppCompatActivity {
             intent.putExtra(getString(R.string.bKey), bName);
             startActivity(intent);
         }
+    }
+
+    /**
+     * Function to display a how-to dialog to the players
+     * @param view
+     */
+    public void showTutorial(View view) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(getString(R.string.moveRules) + "\n" +
+                getString(R.string.diagonalRules) + "\n" +
+                getString(R.string.killRules) + "\n" +
+                getString(R.string.doneRules) + "\n" +
+                getString(R.string.resignRules) + "\n");
+        builder.setTitle(getString(R.string.howTo) + " " + getString(R.string.title));
+        builder.setPositiveButton(android.R.string.ok, null);
+        builder.create().show();
     }
 }

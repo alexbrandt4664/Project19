@@ -19,7 +19,8 @@
     <RelativeLayout
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="2">
+        android:layout_weight="2"
+        android:gravity="center">
 
         <EditText
             android:id="@+id/aName"
@@ -27,9 +28,7 @@
             android:layout_height="wrap_content"
             android:hint="@string/aName"
             android:gravity="center"
-            android:layout_marginTop="48dp"
             android:layout_centerHorizontal="true"
-            android:layout_marginBottom="36dp"
             android:inputType="text"
             android:importantForAutofill="no"/>
 
@@ -40,7 +39,6 @@
             android:hint="@string/bName"
             android:layout_centerHorizontal="true"
             android:layout_below="@id/aName"
-            android:layout_marginBottom="24dp"
             android:inputType="text"
             android:importantForAutofill="no"
             android:gravity="center"/>
@@ -48,8 +46,9 @@
         <FrameLayout
             android:id="@+id/btnFrame"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@id/bName">
+            android:layout_height="wrap_content"
+            android:layout_below="@id/bName"
+            android:layout_marginTop="10dp">
 
             <Button
                 android:layout_width="wrap_content"
@@ -59,6 +58,19 @@
                 android:text="@string/start" />
         </FrameLayout>
 
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/btnFrame">
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:onClick="showTutorial"
+                android:text="@string/howTo" />
+        </FrameLayout>
     </RelativeLayout>
     <!--<LinearLayout
         android:layout_width="match_parent"
