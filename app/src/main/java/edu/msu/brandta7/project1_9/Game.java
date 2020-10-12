@@ -1,11 +1,15 @@
 package edu.msu.brandta7.project1_9;
 
 import android.content.Context;
+import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.util.DisplayMetrics;
 import android.view.View;
+import android.view.WindowManager;
+import android.view.WindowMetrics;
 
 import java.util.ArrayList;
 
@@ -44,9 +48,20 @@ public class Game {
         /**
          * Hard coded need to be changed
          */
-        int width = mainBoard.getWidth();
-        int height = mainBoard.getHeight();
-        minDim = width < height ? width : height;
+
+        int orientation = context.getResources().getConfiguration().orientation;
+        DisplayMetrics metrics = context.getResources().getDisplayMetrics();
+        int width = metrics.widthPixels;
+        int height = metrics.heightPixels;
+
+        if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            width = height;
+        }
+        else {
+            height = width;
+        }
+
+        int minDim = width;
 
         boardDim = minDim - 30;
         spaceLength = (int)(boardDim / 8);
@@ -63,6 +78,5 @@ public class Game {
         for(Piece piece : pieces){
             piece.draw(canvas, spaceLength);
         }
-
     }
 }

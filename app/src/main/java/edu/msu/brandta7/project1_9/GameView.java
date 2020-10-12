@@ -15,9 +15,6 @@ public class GameView extends View {
 
     private Game game;
 
-    private int width;
-    private int height;
-
     public GameView(Context context) {
         super(context);
         init(null, 0);
@@ -34,7 +31,6 @@ public class GameView extends View {
     }
 
     private void init(AttributeSet attrs, int defStyle) {game = new Game(getContext(), this);}
-
 
     @Override
     protected void onDraw(Canvas canvas) {
