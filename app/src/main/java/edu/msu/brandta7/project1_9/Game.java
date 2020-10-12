@@ -30,16 +30,22 @@ public class Game {
      */
     private int spaceLength;
 
+    /**
+     * Reference for height and width
+     */
+    private Bitmap mainBoard;
+
     public Game(Context context, GameView gameView){
 
         this.gameView = gameView;
 
+        mainBoard = BitmapFactory.decodeResource(context.getResources(), R.drawable.board);
 
         /**
          * Hard coded need to be changed
          */
-        int width = 1080;
-        int height = 1205;
+        int width = mainBoard.getWidth();
+        int height = mainBoard.getHeight();
         minDim = width < height ? width : height;
 
         boardDim = minDim - 30;

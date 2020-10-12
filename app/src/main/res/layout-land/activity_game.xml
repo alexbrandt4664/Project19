@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal">
+
+    <view
+        android:id="@+id/gameView"
+        class="edu.msu.brandta7.project1_9.GameView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="2" />
+
+    <RelativeLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center">
+
+        <Button
+            android:id="@+id/btnDone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            android:onClick="donePressed"
+            android:text="@string/done" />
+
+        <Button
+            android:id="@+id/btnResign"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/resign"
+            android:layout_below="@id/btnDone"
+            android:layout_marginTop="12dp"
+            android:onClick="resignPressed"/>
+
+    </RelativeLayout>
+
+</LinearLayout>
