@@ -7,9 +7,8 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.util.DisplayMetrics;
+import android.util.TypedValue;
 import android.view.View;
-import android.view.WindowManager;
-import android.view.WindowMetrics;
 
 import java.util.ArrayList;
 
@@ -34,34 +33,37 @@ public class Game {
      */
     private int spaceLength;
 
-    /**
-     * Reference for height and width
-     */
-    private Bitmap mainBoard;
+    public Game(Context context){
 
-    public Game(Context context, GameView gameView){
-
-        this.gameView = gameView;
-
-        mainBoard = BitmapFactory.decodeResource(context.getResources(), R.drawable.board);
-
-        /**
-         * Hard coded need to be changed
-         */
-
-        int orientation = context.getResources().getConfiguration().orientation;
         DisplayMetrics metrics = context.getResources().getDisplayMetrics();
+        int orientation = context.getResources().getConfiguration().orientation;
+
         int width = metrics.widthPixels;
         int height = metrics.heightPixels;
 
-        if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            width = height;
-        }
-        else {
-            height = width;
+        // When horizontal, flip dimensions
+        if (orientation == Configuration.ORIENTATION_LANDSCAPE){
+
+            int actionBar = 0;
+            int statusBar = 0;
+
+            // Get the height of the status bar
+            int resourceId = context.getResources().getIdentifier("status_bar_height", "dimen", "android");
+            if (resourceId > 0) {
+                statusBar = context.getResources().getDimensionPixelSize(resourceId);
+            }
+
+            // Get the height of the action bar
+            TypedValue device = new TypedValue();
+            if (context.getTheme().resolveAttribute(android.R.attr.actionBarSize, device, true)) {
+                actionBar = TypedValue.complexToDimensionPixelSize(device.data,context.getResources().getDisplayMetrics());
+            }
+
+            // Set the width equal to the previous height minus the status and action bars
+            width = height - (statusBar + actionBar);
         }
 
-        int minDim = width;
+        minDim = width;
 
         boardDim = minDim - 30;
         spaceLength = (int)(boardDim / 8);
@@ -78,5 +80,6 @@ public class Game {
         for(Piece piece : pieces){
             piece.draw(canvas, spaceLength);
         }
+
     }
 }

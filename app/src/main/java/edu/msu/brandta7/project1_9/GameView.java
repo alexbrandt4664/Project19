@@ -1,6 +1,7 @@
 package edu.msu.brandta7.project1_9;
 
 import android.content.Context;
+import android.content.res.Configuration;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.util.AttributeSet;
@@ -30,7 +31,7 @@ public class GameView extends View {
         init(attrs, defStyle);
     }
 
-    private void init(AttributeSet attrs, int defStyle) {game = new Game(getContext(), this);}
+    private void init(AttributeSet attrs, int defStyle) {game = new Game(getContext());}
 
     @Override
     protected void onDraw(Canvas canvas) {
@@ -38,6 +39,4 @@ public class GameView extends View {
 
         game.draw(canvas);
     }
-
-
 }
