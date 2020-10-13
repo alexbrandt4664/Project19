@@ -1,27 +1,27 @@
 
 Project 1 Submission
 
-Group Name:   (please enter)
+Group Name:   Group 9
 
 When you have completed the project, complete the following form and include it with your project. Include this file as a text file in the folder with your project when you turn it in. 
 
 
-Member 1: 
+Member 1: Alex Brandt
 
-Responsiblity:
-
-
-
-Member 2: 
-
-Responsiblity:
+Responsiblity: Developed the activities and the layouts, as well as the logic to navigate between
+each activity. Also implemented the AlertDialog to display the rules on the home page.
 
 
+Member 2: Tate Bond
 
-Member 3: 
+Responsiblity: Responsible for the drawing of the board and pieces for both horizontal
+and portrait view along with the custom views that support them. Also set up the Board and Piece
+classes for use in in the final version of the game.
 
-Responsiblity:
 
+Member 3: Charles Robert Moshier
+
+Responsiblity: Team member failed to reach out or contact us following the first meeting.
 
 
 Member 4 (if applicable): 
