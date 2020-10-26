@@ -5,8 +5,20 @@ public class Node {
     /**
      * Coordinates for the center of the space
      */
+    private int pixX;
+    private int pixY;
+
+    /**
+     * Coordinates for place on the board
+     * (0,0) starting at top left
+     */
     private int x;
     private int y;
+
+    /**
+     * If a node was visited while checking for moves
+     */
+    private boolean visited;
 
     /**
      * The Piece in this space
@@ -14,9 +26,12 @@ public class Node {
      */
     private Piece piece;
 
-    public Node(int xLoc, int yLoc, Piece piece){
-        x = xLoc;
-        y = yLoc;
+    public Node(int xLoc, int yLoc, int pixX, int pixY, boolean visited, Piece piece){
+
+        this.x = xLoc;
+        this.y = yLoc;
+        this.pixX = pixX;
+        this.pixY = pixY;
         this.piece = piece;
     }
 
@@ -26,6 +41,22 @@ public class Node {
 
     public int getY() {
         return y;
+    }
+
+    public int getPixX() {
+        return pixX;
+    }
+
+    public int getPixY() {
+        return pixY;
+    }
+
+    public boolean isVisited() {
+        return visited;
+    }
+
+    public void setVisited(boolean visited) {
+        this.visited = visited;
     }
 
     public Piece getPiece() {

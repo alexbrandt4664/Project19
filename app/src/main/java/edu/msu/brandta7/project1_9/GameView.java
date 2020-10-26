@@ -6,6 +6,7 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 
 
@@ -39,4 +40,7 @@ public class GameView extends View {
 
         game.draw(canvas);
     }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {return game.onTouchEvent(this, event);}
 }

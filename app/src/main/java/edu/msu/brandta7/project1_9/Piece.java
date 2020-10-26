@@ -56,7 +56,41 @@ public class Piece {
         canvas.translate(-regPiece.getWidth() / 2f, -regPiece.getHeight() / 2f);
 
         // Draw the bitmap
-        canvas.drawBitmap(regPiece, 0, 0, null);
+        if (isKing){
+            canvas.drawBitmap(kingPiece, 0, 0, null);
+        }
+        else {
+            canvas.drawBitmap(regPiece, 0, 0, null);
+        }
+
         canvas.restore();
+    }
+
+    public boolean isKing() {
+        return isKing;
+    }
+
+    public void setKing(boolean king) {
+        isKing = king;
+    }
+
+    public int getxLoc() {
+        return xLoc;
+    }
+
+    public void setxLoc(int xLoc) {
+        this.xLoc = xLoc;
+    }
+
+    public int getyLoc() {
+        return yLoc;
+    }
+
+    public void setyLoc(int yLoc) {
+        this.yLoc = yLoc;
+    }
+
+    public int getTeam() {
+        return team;
     }
 }
