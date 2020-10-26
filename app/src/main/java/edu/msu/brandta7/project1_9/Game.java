@@ -159,6 +159,14 @@ public class Game {
             piece.setxLoc(newNode.getPixX());
             piece.setyLoc(newNode.getPixY());
         }
+
+        // Set the king piece
+        if (piece != null && piece.getTeam() == 0 && newY == 7){
+            piece.setKing(true);
+        }
+        else if (piece != null && piece.getTeam() == 1 && newY == 0){
+            piece.setKing(true);
+        }
         newNode.setPiece(piece);
     }
 }
