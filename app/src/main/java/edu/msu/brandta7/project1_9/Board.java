@@ -24,6 +24,8 @@ public class Board {
 
     private int boardDim;
 
+    private String test = "";
+
     private int spaceLength;
 
     public Board(Context context, int minDim, int boardDim, int spaceLength){
