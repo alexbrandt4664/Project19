@@ -33,4 +33,10 @@ public class Player {
     public int getTeam() { return  team; }
 
     public String getName() { return name; }
+
+    public void setMove(boolean status) {
+        moved = status;
+    }
+
+    public boolean getMoved() { return moved; }
 }

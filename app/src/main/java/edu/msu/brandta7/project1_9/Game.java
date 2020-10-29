@@ -110,8 +110,8 @@ public class Game {
         Node node = board.getNodeByPix(relX, relY);
         Piece piece = node.getPiece();
 
-        // Check that the selected piece is the current player's
-        if (piece == null || piece.getTeam() == current.getTeam()) {
+        // Check that the selected piece is the current player's and that the current player hasn't moved yet
+        if (!current.getMoved() && (piece == null || piece.getTeam() == current.getTeam())) {
 
             // If a piece hasn't been selected get it's moves and mark selected
             if (selected == null){
@@ -178,6 +178,8 @@ public class Game {
             piece.setKing(true);
         }
         newNode.setPiece(piece);
+
+        current.setMove(true);
     }
 
     /**
@@ -203,5 +205,8 @@ public class Game {
         else {
             current = playerA;
         }
+
+        // Reset the move status of the current player
+        current.setMove(false);
     }
 }
