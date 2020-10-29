@@ -44,6 +44,15 @@ public class Game {
      */
     private Node selected = null;
 
+    /**
+     * The current player
+     */
+    private Player current;
+
+    private Player playerA;
+
+    private Player playerB;
+
     public Game(Context context){
 
         DisplayMetrics metrics = context.getResources().getDisplayMetrics();
@@ -80,9 +89,6 @@ public class Game {
         spaceLength = (int)(boardDim / 8);
 
         board = new Board(context, minDim, boardDim, spaceLength);
-        movePiece(2, 5, 2, 3);
-        movePiece(1, 6, 2, 5);
-        movePiece(5, 6, 5, 4);
 
     }
 
@@ -102,38 +108,42 @@ public class Game {
         int relX = (int)event.getX();
         int relY = (int)event.getY();
         Node node = board.getNodeByPix(relX, relY);
+        Piece piece = node.getPiece();
 
-        // If a piece hasn't been selected get it's moves and mark selected
-        if (selected == null){
-            moves = board.getMoves(node);
-            if (moves.size() > 0){
-                selected = node;
+        // Check that the selected piece is the current player's
+        if (piece == null || piece.getTeam() == current.getTeam()) {
+
+            // If a piece hasn't been selected get it's moves and mark selected
+            if (selected == null){
+                moves = board.getMoves(node);
+                if (moves.size() > 0){
+                    selected = node;
+                }
             }
-        }
-        else {
+            else {
 
-            // If a piece has been selected and touch on move
-            if (moves.contains(node)){
+                // If a piece has been selected and touch on move
+                if (moves.contains(node)){
 
-                // Remove pieces that have been jumped
-                ArrayList<Node> jumps = board.getJumps(selected, node);
-                for (Node jump: jumps) {
-                    jump.setPiece(null);
+                    // Remove pieces that have been jumped
+                    ArrayList<Node> jumps = board.getJumps(selected, node);
+                    for (Node jump: jumps) {
+                        jump.setPiece(null);
+                    }
+
+                    // Move the piece
+                    movePiece(selected.getX(), selected.getY(), node.getX(), node.getY());
+                    selected = null;
+                    moves.clear();
                 }
 
-                // Move the piece
-                movePiece(selected.getX(), selected.getY(), node.getX(), node.getY());
-                selected = null;
-                moves.clear();
-            }
-
-            // If selected but move not touched
-            if (selected != null){
-                moves = board.getMoves(node);
-                selected = node;
+                // If selected but move not touched
+                if (selected != null){
+                    moves = board.getMoves(node);
+                    selected = node;
+                }
             }
         }
-
 
         view.invalidate();
 
@@ -168,5 +178,30 @@ public class Game {
             piece.setKing(true);
         }
         newNode.setPiece(piece);
+    }
+
+    /**
+     * Create the two players in the game
+     * @param a The name of player A
+     * @param b The name of player B
+     */
+    public void createPlayers(String a, String b) {
+        playerA = new Player(a, 0);
+        playerB = new Player(b, 1);
+
+        // Set the current player to A
+        current = playerA;
+    }
+
+    /**
+     * Change the current player of the game
+     */
+    public void changeCurrent() {
+        if (current == playerA) {
+            current = playerB;
+        }
+        else {
+            current = playerA;
+        }
     }
 }

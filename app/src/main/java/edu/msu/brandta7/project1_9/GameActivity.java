@@ -25,10 +25,17 @@ public class GameActivity extends AppCompatActivity {
      */
     private String currentPlayer;
 
+    /**
+     * The game view
+     */
+    GameView gameView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
+
+        gameView = findViewById(R.id.gameView);
 
         // Get the two names passed as input
         aName = getIntent().getExtras().getString(getString(R.string.aKey));
@@ -36,17 +43,21 @@ public class GameActivity extends AppCompatActivity {
 
         currentPlayer = aName;
 
+        gameView.getGame().createPlayers(aName, bName);
+
         Toast.makeText(getApplicationContext(), currentPlayer + getString(R.string.currentPlayer), Toast.LENGTH_SHORT).show();
     }
 
     public void donePressed(View view) {
         currentPlayer = currentPlayer.equals(aName) ? bName : aName;
         Toast.makeText(getApplicationContext(), currentPlayer + getString(R.string.currentPlayer), Toast.LENGTH_SHORT).show();
+        gameView.getGame().changeCurrent();
     }
 
     public void resignPressed(View view) {
         Intent intent = new Intent(this, EndActivity.class);
 
+        //TODO Create a function in game to get the winner
         // Pass the winner (the player who didn't press resign) to the end of the game
         intent.putExtra(getString(R.string.winnerKey), currentPlayer.equals(aName) ? bName : aName);
         intent.putExtra(getString(R.string.loserKey), currentPlayer);

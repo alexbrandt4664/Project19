@@ -43,4 +43,6 @@ public class GameView extends View {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {return game.onTouchEvent(this, event);}
+
+    public Game getGame() { return game; }
 }
