@@ -16,9 +16,13 @@
     <string name="menu">Return to Start Menu</string>
     <string name="loserKey">Loser</string>
     <string name="howTo">How to Play</string>
-    <string name="moveRules">1. Move by selecting the piece you\'d like to move and drag it where you want to move it.</string>
+    <string name="moveRules">1. Move by selecting the piece you\'d like to move and select one of the highlighted squares to move it there.</string>
     <string name="diagonalRules">2. Each piece must move diagonally on dark squares of the board.</string>
     <string name="killRules">3. If the opponent\'s checker is adjacent to yours, and the next square in that direction is empty, then you can jump over that piece and capture it.</string>
     <string name="doneRules">4. Once you\'ve finished your turn, press the done button.</string>
     <string name="resignRules">5. If you\'d like to concede or have run out of pieces, press the resign button.</string>
+    <string name="kingRules">6. Once a piece reaches the opposite edge of the board, they become a king and can move forwards or backwards diagonally.</string>
+    <string name="white">White</string>
+    <string name="green">Green</string>
+    <string name="colorMessage">Their Color: </string>
 </resources>

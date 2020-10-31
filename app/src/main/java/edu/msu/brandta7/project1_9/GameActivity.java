@@ -30,6 +30,11 @@ public class GameActivity extends AppCompatActivity {
      */
     GameView gameView;
 
+    /**
+     * The color of the current piece
+     */
+    private String currentColor;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,10 +47,12 @@ public class GameActivity extends AppCompatActivity {
         bName = getIntent().getExtras().getString(getString(R.string.bKey));
 
         currentPlayer = aName;
+        currentColor = getResources().getString(R.string.white);
 
         gameView.getGame().createPlayers(aName, bName);
 
-        Toast.makeText(getApplicationContext(), currentPlayer + getString(R.string.currentPlayer), Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), currentPlayer + getString(R.string.currentPlayer) + " " +
+                getString(R.string.colorMessage) + currentColor, Toast.LENGTH_LONG).show();
     }
 
     public void donePressed(View view) {

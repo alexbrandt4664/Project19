@@ -209,4 +209,13 @@ public class Game {
         // Reset the move status of the current player
         current.setMove(false);
     }
+
+    /**
+     * Checks for if the current player won
+     * @return True if the current player won, false otherwise
+     * TODO Implement this
+     */
+    public boolean checkWinner() {
+        return false;
+    }
 }

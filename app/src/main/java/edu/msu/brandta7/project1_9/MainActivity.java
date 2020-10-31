@@ -49,7 +49,8 @@ public class MainActivity extends AppCompatActivity {
                 getString(R.string.diagonalRules) + "\n" +
                 getString(R.string.killRules) + "\n" +
                 getString(R.string.doneRules) + "\n" +
-                getString(R.string.resignRules) + "\n");
+                getString(R.string.resignRules) + "\n" +
+                getString(R.string.kingRules) + "\n");
         builder.setTitle(getString(R.string.howTo) + " " + getString(R.string.title));
         builder.setPositiveButton(android.R.string.ok, null);
         builder.create().show();
