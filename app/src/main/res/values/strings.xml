@@ -22,6 +22,7 @@
     <string name="doneRules">4. Once you\'ve finished your turn, press the done button.</string>
     <string name="resignRules">5. If you\'d like to concede or have run out of pieces, press the resign button.</string>
     <string name="kingRules">6. Once a piece reaches the opposite edge of the board, they become a king and can move forwards or backwards diagonally.</string>
+    <string name="selectRules">7. Select a piece by pressing it for the possible moves. Deselect it by pressing it again.</string>
     <string name="white">White</string>
     <string name="green">Green</string>
     <string name="colorMessage">Their Color: </string>

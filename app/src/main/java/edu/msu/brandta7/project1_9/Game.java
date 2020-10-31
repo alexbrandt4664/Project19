@@ -53,6 +53,9 @@ public class Game {
 
     private Player playerB;
 
+    // The previously selected node
+    private Node previousNode;
+
     public Game(Context context){
 
         DisplayMetrics metrics = context.getResources().getDisplayMetrics();
@@ -110,8 +113,18 @@ public class Game {
         Node node = board.getNodeByPix(relX, relY);
         Piece piece = node.getPiece();
 
+        // Check if you selected the previously selected node and deselect it
+        if (previousNode != null &&
+                (node.getPixX() == previousNode.getPixX() && node.getPixY() == previousNode.getPixY() && selected != null)) {
+            // Deselect the current node
+            selected = null;
+            moves = new ArrayList();
+        }
+
         // Check that the selected piece is the current player's and that the current player hasn't moved yet
-        if (!current.getMoved() && (piece == null || piece.getTeam() == current.getTeam())) {
+        else if (!current.getMoved() && (piece == null || piece.getTeam() == current.getTeam())) {
+
+            previousNode = node;
 
             // If a piece hasn't been selected get it's moves and mark selected
             if (selected == null){
