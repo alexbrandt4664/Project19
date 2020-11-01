@@ -50,21 +50,35 @@ public class GameActivity extends AppCompatActivity {
         currentColor = getResources().getString(R.string.white);
 
         gameView.getGame().createPlayers(aName, bName);
+        gameView.getGame().createBoard(getApplicationContext());
 
         Toast.makeText(getApplicationContext(), currentPlayer + getString(R.string.currentPlayer) + " " +
-                getString(R.string.colorMessage) + currentColor, Toast.LENGTH_LONG).show();
+                getString(R.string.colorMessage) + " " + currentColor, Toast.LENGTH_LONG).show();
     }
 
     public void donePressed(View view) {
         currentPlayer = currentPlayer.equals(aName) ? bName : aName;
-        Toast.makeText(getApplicationContext(), currentPlayer + getString(R.string.currentPlayer), Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), currentPlayer + getString(R.string.currentPlayer) + " " +
+                getString(R.string.colorMessage) + " " + currentColor, Toast.LENGTH_LONG).show();
         gameView.getGame().changeCurrent();
+        boolean winner = gameView.getGame().checkWinner();
+
+        // Check if the other player (current) lost
+        if (winner) {
+            createEnd();
+        }
     }
 
     public void resignPressed(View view) {
+        createEnd();
+    }
+
+    /**
+     * Create an activity to go to the end of game activity
+     */
+    private void createEnd() {
         Intent intent = new Intent(this, EndActivity.class);
 
-        //TODO Create a function in game to get the winner
         // Pass the winner (the player who didn't press resign) to the end of the game
         intent.putExtra(getString(R.string.winnerKey), currentPlayer.equals(aName) ? bName : aName);
         intent.putExtra(getString(R.string.loserKey), currentPlayer);

@@ -28,7 +28,9 @@ public class Board {
 
     private int spaceLength;
 
-    public Board(Context context, int minDim, int boardDim, int spaceLength){
+    private Game game;
+
+    public Board(Context context, int minDim, int boardDim, int spaceLength, Game game){
 
         outlinePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         outlinePaint.setColor(0xFF000000);
@@ -46,6 +48,7 @@ public class Board {
         this.minDim = minDim;
         this.boardDim = boardDim;
         this.spaceLength = spaceLength;
+        this.game = game;
 
         // Initialize board array
         for(int i = 0; i < 8; i++)  {
@@ -74,9 +77,11 @@ public class Board {
                         if(locs1[i] == board.get(x_count).size()){
                             if(y < (int)(minDim / 2)){
                                 piece = new Piece(context, x, y, 0);
+                                game.getPlayerA().addPiece(piece);
                             }
                             else{
                                 piece = new Piece(context, x, y, 1);
+                                game.getPlayerB().addPiece(piece);
                             }
                         }
                     }
@@ -87,9 +92,11 @@ public class Board {
                         if(locs2[i] == board.get(x_count).size()){
                             if(y < (int)(minDim / 2)){
                                 piece = new Piece(context, x, y, 0);
+                                game.getPlayerA().addPiece(piece);
                             }
                             else{
                                 piece = new Piece(context, x, y, 1);
+                                game.getPlayerB().addPiece(piece);
                             }
                         }
                     }

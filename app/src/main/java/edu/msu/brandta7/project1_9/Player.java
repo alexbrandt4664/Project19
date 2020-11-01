@@ -1,5 +1,7 @@
 package edu.msu.brandta7.project1_9;
 
+import java.util.ArrayList;
+
 public class Player {
 
     /**
@@ -19,6 +21,8 @@ public class Player {
      */
     private boolean moved;
 
+    private ArrayList<Piece> pieces;
+
     /**
      * Constructor
      * @param name The name of the player
@@ -28,15 +32,38 @@ public class Player {
         this.name = name;
         this.team = teamNum;
         moved = false;
+        pieces = new ArrayList<>();
     }
 
     public int getTeam() { return  team; }
-
-    public String getName() { return name; }
 
     public void setMove(boolean status) {
         moved = status;
     }
 
     public boolean getMoved() { return moved; }
+
+    /**
+     * Adds a piece to this player's list of pieces
+     * @param piece The piece to add
+     */
+    public void addPiece(Piece piece) {
+        pieces.add(piece);
+    }
+
+    /**
+     * Removes the piece from this player's list of pieces
+     * @param piece The piece to remove
+     */
+    public void removePiece(Piece piece) {
+        pieces.remove(piece);
+    }
+
+    /**
+     * Check whether or not this player is out of pieces
+     * @return True if this player has run out of pieces, false otherwise
+     */
+    public boolean hasPieces() {
+        return pieces.size() != 0;
+    }
 }

@@ -91,8 +91,14 @@ public class Game {
         boardDim = minDim - 30;
         spaceLength = (int)(boardDim / 8);
 
-        board = new Board(context, minDim, boardDim, spaceLength);
+    }
 
+    /**
+     * Create the board object
+     * @param context The context to create it in
+     */
+    public void createBoard(Context context) {
+        board = new Board(context, minDim, boardDim, spaceLength, this);
     }
 
     public void draw(Canvas canvas){
@@ -103,7 +109,6 @@ public class Game {
         for(Piece piece : pieces){
             piece.draw(canvas, spaceLength);
         }
-
     }
 
     public boolean onTouchEvent(View view, MotionEvent event){
@@ -140,7 +145,10 @@ public class Game {
 
                     // Remove pieces that have been jumped
                     ArrayList<Node> jumps = board.getJumps(selected, node);
+                    Player other = current == playerA ? playerB : playerA;
+
                     for (Node jump: jumps) {
+                        other.removePiece(jump.getPiece());
                         jump.setPiece(null);
                     }
 
@@ -224,11 +232,25 @@ public class Game {
     }
 
     /**
-     * Checks for if the current player won
-     * @return True if the current player won, false otherwise
+     * Checks for if the current player lost
+     * @return True if the current player lost, false otherwise
      * TODO Implement this
      */
     public boolean checkWinner() {
+
+        // Check whether or not the current player doesn't have pieces
+        if (!current.hasPieces()) {
+            return true;
+        }
+
         return false;
+    }
+
+    public Player getPlayerA() {
+        return playerA;
+    }
+
+    public Player getPlayerB() {
+        return playerB;
     }
 }
