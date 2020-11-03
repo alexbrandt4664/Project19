@@ -14,14 +14,13 @@ each activity. Also implemented the AlertDialog to display the rules on the home
 
 Member 2: Tate Bond
 
-Responsiblity: Responsible for the drawing of the board and pieces for both horizontal
-and portrait view along with the custom views that support them. Also set up the Board and Piece
-classes for use in in the final version of the game.
+Responsiblity: Implemented the selection of pieces through touch control along with the moving and
+jumping of pieces.
 
 
 Member 3: Charles Robert Moshier
 
-Responsiblity: Team member failed to reach out or contact us following the first meeting.
+Responsiblity: Team member failed to reach out or contact us.
 
 
 Member 4 (if applicable): 
