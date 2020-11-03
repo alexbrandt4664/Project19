@@ -9,8 +9,8 @@ When you have completed the project, complete the following form and include it 
 Member 1: Alex Brandt
 
 Responsiblity: Developed the activities and the layouts, as well as the logic to navigate between
-each activity. Also implemented the AlertDialog to display the rules on the home page.
-
+each activity. Also implemented the AlertDialog to display the rules on the home page. Implemented functionality to determine the winner, determine the current player, and to
+handle the rotation
 
 Member 2: Tate Bond
 
