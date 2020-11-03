@@ -1,8 +1,11 @@
 package edu.msu.brandta7.project1_9;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.ArrayList;
 
-public class Player {
+public class Player implements Parcelable {
 
     /**
      * Name of the player
@@ -35,6 +38,25 @@ public class Player {
         pieces = new ArrayList<>();
     }
 
+    protected Player(Parcel in) {
+        name = in.readString();
+        team = in.readInt();
+        moved = in.readByte() != 0;
+        pieces = in.readArrayList(Piece.class.getClassLoader());
+    }
+
+    public static final Creator<Player> CREATOR = new Creator<Player>() {
+        @Override
+        public Player createFromParcel(Parcel parcel) {
+            return new Player(parcel);
+        }
+
+        @Override
+        public Player[] newArray(int i) {
+            return new Player[i];
+        }
+    };
+
     public int getTeam() { return  team; }
 
     public void setMove(boolean status) {
@@ -65,5 +87,26 @@ public class Player {
      */
     public boolean hasPieces() {
         return pieces.size() != 0;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(name);
+        dest.writeInt(team);
+        dest.writeByte((byte)(moved ? 1 : 0));
+        dest.writeParcelable((Parcelable) pieces, 0);
+    }
+
+    public String getName() { return name; }
+
+    public void adjustCoords(int spaceLength, int oldLength) {
+        for (Piece piece : pieces) {
+            piece.adjustCoords(spaceLength, oldLength);
+        }
     }
 }

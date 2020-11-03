@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.res.Configuration;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.os.Bundle;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -11,7 +12,7 @@ import android.view.View;
 
 
 /**
- * Custom view class for our Puzzle.
+ * Custom view class for our game.
  */
 public class GameView extends View {
 
@@ -45,4 +46,6 @@ public class GameView extends View {
     public boolean onTouchEvent(MotionEvent event) {return game.onTouchEvent(this, event);}
 
     public Game getGame() { return game; }
+
+    public void setGame(Game game) { this.game = game; }
 }

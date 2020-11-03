@@ -2,10 +2,9 @@ package edu.msu.brandta7.project1_9;
 
 import android.content.Context;
 import android.content.res.Configuration;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.graphics.Paint;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.MotionEvent;
@@ -13,7 +12,7 @@ import android.view.View;
 
 import java.util.ArrayList;
 
-public class Game {
+public class Game implements Parcelable {
 
     private Board board;
 
@@ -93,12 +92,37 @@ public class Game {
 
     }
 
+    protected Game(Parcel in) {
+        board = in.readParcelable(Board.class.getClassLoader());
+        minDim = in.readInt();
+        boardDim = in.readInt();
+        spaceLength = in.readInt();
+        selected = in.readParcelable(Node.class.getClassLoader());
+        current = in.readParcelable(Player.class.getClassLoader());
+        playerA = in.readParcelable(Player.class.getClassLoader());
+        playerB = in.readParcelable(Player.class.getClassLoader());
+        previousNode = in.readParcelable(Node.class.getClassLoader());
+        moves = in.readArrayList(moves.getClass().getClassLoader());
+    }
+
+    public static final Creator<Game> CREATOR = new Creator<Game>() {
+        @Override
+        public Game createFromParcel(Parcel in) {
+            return new Game(in);
+        }
+
+        @Override
+        public Game[] newArray(int size) {
+            return new Game[size];
+        }
+    };
+
     /**
      * Create the board object
      * @param context The context to create it in
      */
     public void createBoard(Context context) {
-        board = new Board(context, minDim, boardDim, spaceLength, this);
+        board = new Board(context, minDim, spaceLength, this);
     }
 
     public void draw(Canvas canvas){
@@ -253,4 +277,39 @@ public class Game {
     public Player getPlayerB() {
         return playerB;
     }
+
+    public Player getCurrent() { return current; }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeParcelable(board, i);
+        parcel.writeInt(minDim);
+        parcel.writeInt(boardDim);
+        parcel.writeInt(spaceLength);
+        parcel.writeParcelable(selected, i);
+        parcel.writeParcelable(current, i);
+        parcel.writeParcelable(playerA, i);
+        parcel.writeParcelable(playerB, i);
+        parcel.writeParcelable(previousNode, i);
+        parcel.writeList(moves);
+    }
+
+    public void setBoardDim(int boardDim) { this.boardDim = boardDim; }
+
+    public int getBoardDim() { return boardDim; }
+
+    public void setMinDim(int min) { minDim = min; }
+
+    public int getMinDim() { return minDim; }
+
+    public void setSpaceLength(int spaceLength) { this.spaceLength = spaceLength; }
+
+    public int getSpaceLength() { return spaceLength; }
+
+    public Board getBoard() { return board; }
 }

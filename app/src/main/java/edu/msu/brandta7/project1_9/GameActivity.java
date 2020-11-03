@@ -30,10 +30,19 @@ public class GameActivity extends AppCompatActivity {
      */
     GameView gameView;
 
+    Game game;
+
     /**
      * The color of the current piece
      */
     private String currentColor;
+
+    /**
+     * Used to keep track of the current orientation
+     * False = normal
+     * True = landscape
+     */
+    private boolean state = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,22 +51,59 @@ public class GameActivity extends AppCompatActivity {
 
         gameView = findViewById(R.id.gameView);
 
-        // Get the two names passed as input
-        aName = getIntent().getExtras().getString(getString(R.string.aKey));
-        bName = getIntent().getExtras().getString(getString(R.string.bKey));
+        if (savedInstanceState != null) {
+            game = savedInstanceState.getParcelable("GAME");
+            state = savedInstanceState.getByte("ORIENTATION") == 1;
 
-        currentPlayer = aName;
-        currentColor = getResources().getString(R.string.white);
+            aName = game.getPlayerA().getName();
+            bName = game.getPlayerB().getName();
+            currentPlayer = game.getCurrent().getName();
 
-        gameView.getGame().createPlayers(aName, bName);
-        gameView.getGame().createBoard(getApplicationContext());
+            // Have to set the new dimensions of the new game
+            int tempMin = gameView.getGame().getMinDim();
+            int tempBoardDim = gameView.getGame().getBoardDim();
+            int tempLength = gameView.getGame().getSpaceLength();
 
-        Toast.makeText(getApplicationContext(), currentPlayer + getString(R.string.currentPlayer) + " " +
-                getString(R.string.colorMessage) + " " + currentColor, Toast.LENGTH_LONG).show();
+            int oldLength = game.getSpaceLength();
+
+            gameView.setGame(game);
+
+            gameView.getGame().setBoardDim(tempBoardDim);
+            gameView.getGame().setMinDim(tempMin);
+            gameView.getGame().setSpaceLength(tempLength);
+
+            gameView.getGame().getBoard().setMinDim(tempMin);
+            gameView.getGame().getBoard().setSpaceLength(tempLength);
+
+            // Adjust the coordinates of the pieces
+            gameView.getGame().getPlayerA().adjustCoords(tempLength, oldLength);
+            gameView.getGame().getPlayerB().adjustCoords(tempLength, oldLength);
+
+            gameView.getGame().getBoard().adjustCoords(oldLength);
+
+            changeColor();
+        }
+        else {
+            // Get the two names passed as input
+            aName = getIntent().getExtras().getString(getString(R.string.aKey));
+            bName = getIntent().getExtras().getString(getString(R.string.bKey));
+
+            currentPlayer = aName;
+            changeColor();
+
+            game = gameView.getGame();
+
+            game.createPlayers(aName, bName);
+            game.createBoard(getApplicationContext());
+
+            Toast.makeText(getApplicationContext(), currentPlayer + getString(R.string.currentPlayer) + " " +
+                    getString(R.string.colorMessage) + " " + currentColor, Toast.LENGTH_LONG).show();
+        }
     }
 
     public void donePressed(View view) {
         currentPlayer = currentPlayer.equals(aName) ? bName : aName;
+        changeColor();
         Toast.makeText(getApplicationContext(), currentPlayer + getString(R.string.currentPlayer) + " " +
                 getString(R.string.colorMessage) + " " + currentColor, Toast.LENGTH_LONG).show();
         gameView.getGame().changeCurrent();
@@ -84,5 +130,20 @@ public class GameActivity extends AppCompatActivity {
         intent.putExtra(getString(R.string.loserKey), currentPlayer);
 
         startActivity(intent);
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        outState.putParcelable("GAME", gameView.getGame());
+        outState.putByte("ORIENTATION", (byte) ((state) ? 0 : 1));
+    }
+
+    /**
+     * Changes the color string to the value corresponding to the current player
+     */
+    private void changeColor() {
+        currentColor = currentPlayer.equals(aName) ? getString(R.string.white) : getString(R.string.green);
     }
 }

@@ -4,11 +4,13 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.os.Parcel;
+import android.os.Parcelable;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Board {
+public class Board implements Parcelable {
 
     private Paint outlinePaint;
 
@@ -22,15 +24,9 @@ public class Board {
 
     private int minDim;
 
-    private int boardDim;
-
-    private String test = "";
-
     private int spaceLength;
 
-    private Game game;
-
-    public Board(Context context, int minDim, int boardDim, int spaceLength, Game game){
+    public Board(Context context, int minDim, int spaceLength, Game game){
 
         outlinePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         outlinePaint.setColor(0xFF000000);
@@ -46,70 +42,41 @@ public class Board {
         red.setAlpha(90);
 
         this.minDim = minDim;
-        this.boardDim = boardDim;
         this.spaceLength = spaceLength;
-        this.game = game;
 
-        // Initialize board array
-        for(int i = 0; i < 8; i++)  {
-            board.add(new ArrayList<Node>());
-        }
-
-        int pieceOffset = (int)(spaceLength / 2);
-        int x_count = 0;
-        int y_count = 0;
-        int[] locs1 = {1, 5, 7};
-        int[] locs2 = {0, 2, 6};
-        boolean is1 = true;
-        for(int x = pieceOffset; x < this.minDim - pieceOffset - 15; x += spaceLength){
-
-            // Check the column
-            if((x_count + 2) % 2 == 0){is1 = true;}
-            else{is1 = false;}
-
-            for(int y = pieceOffset; y < this.minDim - pieceOffset - 15; y += spaceLength){
-                Piece piece = null;
-                Node node = null;
-
-                // If column is loc1 add a piece at those locations
-                if (is1){
-                    for (int i = 0; i < locs1.length; i++){
-                        if(locs1[i] == board.get(x_count).size()){
-                            if(y < (int)(minDim / 2)){
-                                piece = new Piece(context, x, y, 0);
-                                game.getPlayerA().addPiece(piece);
-                            }
-                            else{
-                                piece = new Piece(context, x, y, 1);
-                                game.getPlayerB().addPiece(piece);
-                            }
-                        }
-                    }
-                }
-                // If column is loc2 add a piece at those locations
-                else {
-                    for (int i = 0; i < locs2.length; i++){
-                        if(locs2[i] == board.get(x_count).size()){
-                            if(y < (int)(minDim / 2)){
-                                piece = new Piece(context, x, y, 0);
-                                game.getPlayerA().addPiece(piece);
-                            }
-                            else{
-                                piece = new Piece(context, x, y, 1);
-                                game.getPlayerB().addPiece(piece);
-                            }
-                        }
-                    }
-                }
-
-                node = new Node(x_count, y_count, x, y, false, piece);
-                board.get(x_count).add(node);
-                y_count += 1;
-            }
-            x_count += 1;
-            y_count = 0;
-        }
+        createBoard(context, game);
     }
+
+    protected Board(Parcel in) {
+        minDim = in.readInt();
+        spaceLength = in.readInt();
+        in.readList(board, List.class.getClassLoader());
+
+        outlinePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        outlinePaint.setColor(0xFF000000);
+
+        green = new Paint(Paint.ANTI_ALIAS_FLAG);
+        green.setColor(0xFFF0FFF0);
+
+        grey = new Paint(Paint.ANTI_ALIAS_FLAG);
+        grey.setColor(0xFFC0C0C0);
+
+        red = new Paint(Paint.ANTI_ALIAS_FLAG);
+        red.setColor(0xFFFF6961);
+        red.setAlpha(90);
+    }
+
+    public static final Creator<Board> CREATOR = new Creator<Board>() {
+        @Override
+        public Board createFromParcel(Parcel in) {
+            return new Board(in);
+        }
+
+        @Override
+        public Board[] newArray(int size) {
+            return new Board[size];
+        }
+    };
 
     public void draw(Canvas canvas, ArrayList<Node> moves){
 
@@ -188,7 +155,6 @@ public class Board {
     private void kingMoves(Node start, int x, int y, ArrayList<Node> moves){
         findMoves(start, x, y, moves, false);
         findMoves(start, x, y, moves, true);
-        //findMoves(start, x, y, moves, true, true);
     }
 
     /**
@@ -258,7 +224,6 @@ public class Board {
             }
         }
     }
-
 
     /**
      * Get the jumps associated with a move
@@ -427,5 +392,99 @@ public class Board {
      */
     public Node getNodeByLoc(int x, int y){
         return board.get(x).get(y);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeList(board);
+        parcel.writeInt(minDim);
+        parcel.writeInt(spaceLength);
+    }
+
+    public void setSpaceLength(int length) {
+        spaceLength = length;
+    }
+
+    public void setMinDim(int min) {
+        minDim = min;
+    }
+
+    public void createBoard(Context context, Game game) {
+        // Initialize board array
+        for(int i = 0; i < 8; i++)  {
+            board.add(new ArrayList<Node>());
+        }
+
+        int pieceOffset = (int)(spaceLength / 2);
+        int x_count = 0;
+        int y_count = 0;
+        int[] locs1 = {1, 5, 7};
+        int[] locs2 = {0, 2, 6};
+        boolean is1 = true;
+        for(int x = pieceOffset; x < this.minDim - pieceOffset - 15; x += spaceLength){
+
+            // Check the column
+            if((x_count + 2) % 2 == 0) {
+                is1 = true;
+            }
+            else{
+                is1 = false;
+            }
+
+            for(int y = pieceOffset; y < this.minDim - pieceOffset - 15; y += spaceLength){
+                Piece piece = null;
+                Node node = null;
+
+                // If column is loc1 add a piece at those locations
+                if (is1){
+                    for (int i = 0; i < locs1.length; i++){
+                        if(locs1[i] == board.get(x_count).size()){
+                            if(y < (minDim / 2)){
+                                piece = new Piece(context, x, y, 0);
+                                game.getPlayerA().addPiece(piece);
+                            }
+                            else{
+                                piece = new Piece(context, x, y, 1);
+                                game.getPlayerB().addPiece(piece);
+                            }
+                        }
+                    }
+                }
+                // If column is loc2 add a piece at those locations
+                else {
+                    for (int i = 0; i < locs2.length; i++){
+                        if(locs2[i] == board.get(x_count).size()){
+                            if(y < (int)(minDim / 2)){
+                                piece = new Piece(context, x, y, 0);
+                                game.getPlayerA().addPiece(piece);
+                            }
+                            else{
+                                piece = new Piece(context, x, y, 1);
+                                game.getPlayerB().addPiece(piece);
+                            }
+                        }
+                    }
+                }
+
+                node = new Node(x_count, y_count, x, y, false, piece);
+                board.get(x_count).add(node);
+                y_count += 1;
+            }
+            x_count += 1;
+            y_count = 0;
+        }
+    }
+
+    public void adjustCoords(int oldLength) {
+        for (int i = 0; i < board.size(); i++) {
+            for (int j = 0; j < board.get(i).size(); j++) {
+                board.get(i).get(j).adjustCoords(spaceLength, oldLength);
+            }
+        }
     }
 }
