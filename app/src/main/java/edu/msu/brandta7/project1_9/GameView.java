@@ -1,12 +1,8 @@
 package edu.msu.brandta7.project1_9;
 
 import android.content.Context;
-import android.content.res.Configuration;
 import android.graphics.Canvas;
-import android.graphics.Paint;
-import android.os.Bundle;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 

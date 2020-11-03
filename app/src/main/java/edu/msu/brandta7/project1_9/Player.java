@@ -24,6 +24,9 @@ public class Player implements Parcelable {
      */
     private boolean moved;
 
+    /**
+     * A list of this player's pieces
+     */
     private ArrayList<Piece> pieces;
 
     /**
@@ -99,11 +102,16 @@ public class Player implements Parcelable {
         dest.writeString(name);
         dest.writeInt(team);
         dest.writeByte((byte)(moved ? 1 : 0));
-        dest.writeParcelable((Parcelable) pieces, 0);
+        dest.writeList(pieces);
     }
 
     public String getName() { return name; }
 
+    /**
+     * Adjusts the coordinates of this player's pieces
+     * @param spaceLength The current length of a square
+     * @param oldLength The length of the squares in the previous orientation
+     */
     public void adjustCoords(int spaceLength, int oldLength) {
         for (Piece piece : pieces) {
             piece.adjustCoords(spaceLength, oldLength);

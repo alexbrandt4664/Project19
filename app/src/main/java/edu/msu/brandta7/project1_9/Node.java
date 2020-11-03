@@ -65,10 +65,6 @@ public class Node implements Parcelable {
         return visited;
     }
 
-    public void setVisited(boolean visited) {
-        this.visited = visited;
-    }
-
     public static final Creator<Node> CREATOR = new Creator<Node>() {
         @Override
         public Node createFromParcel(Parcel parcel) {

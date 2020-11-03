@@ -3,7 +3,6 @@ package edu.msu.brandta7.project1_9;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
@@ -37,13 +36,6 @@ public class GameActivity extends AppCompatActivity {
      */
     private String currentColor;
 
-    /**
-     * Used to keep track of the current orientation
-     * False = normal
-     * True = landscape
-     */
-    private boolean state = false;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,8 +44,7 @@ public class GameActivity extends AppCompatActivity {
         gameView = findViewById(R.id.gameView);
 
         if (savedInstanceState != null) {
-            game = savedInstanceState.getParcelable("GAME");
-            state = savedInstanceState.getByte("ORIENTATION") == 1;
+            game = savedInstanceState.getParcelable(getString(R.string.game_key));
 
             aName = game.getPlayerA().getName();
             bName = game.getPlayerB().getName();
@@ -75,10 +66,9 @@ public class GameActivity extends AppCompatActivity {
             gameView.getGame().getBoard().setMinDim(tempMin);
             gameView.getGame().getBoard().setSpaceLength(tempLength);
 
-            // Adjust the coordinates of the pieces
+            // Adjust the coordinates of the pieces and nodes
             gameView.getGame().getPlayerA().adjustCoords(tempLength, oldLength);
             gameView.getGame().getPlayerB().adjustCoords(tempLength, oldLength);
-
             gameView.getGame().getBoard().adjustCoords(oldLength);
 
             changeColor();
@@ -101,6 +91,9 @@ public class GameActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * OnClick for the done button
+     */
     public void donePressed(View view) {
         currentPlayer = currentPlayer.equals(aName) ? bName : aName;
         changeColor();
@@ -115,6 +108,9 @@ public class GameActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * OnClick for the resign button
+     */
     public void resignPressed(View view) {
         createEnd();
     }
@@ -136,8 +132,7 @@ public class GameActivity extends AppCompatActivity {
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
 
-        outState.putParcelable("GAME", gameView.getGame());
-        outState.putByte("ORIENTATION", (byte) ((state) ? 0 : 1));
+        outState.putParcelable(getString(R.string.game_key), gameView.getGame());
     }
 
     /**

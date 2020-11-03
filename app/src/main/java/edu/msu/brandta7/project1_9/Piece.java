@@ -9,14 +9,29 @@ import android.os.Parcelable;
 
 public class Piece implements Parcelable {
 
+    /**
+     * Bool for whether or not this piece is a king
+     */
     private boolean isKing;
 
+    /**
+     * The x coordinate of the piece
+     */
     private int xLoc;
 
+    /**
+     * The y coordinate of the piece
+     */
     private int yLoc;
 
+    /**
+     * Bitmap for the regular piece
+     */
     private Bitmap regPiece;
 
+    /**
+     * Bitmap for the king piece
+     */
     private Bitmap kingPiece;
 
     /**
@@ -26,11 +41,6 @@ public class Piece implements Parcelable {
      */
     private int team;
 
-    /**
-     * An ID to uniquely identify this piece
-     */
-    private int id;
-
     protected Piece(Parcel in) {
         loadBitmaps(App.getContext());
         isKing = in.readByte() != 0;
@@ -39,6 +49,13 @@ public class Piece implements Parcelable {
         team = in.readInt();
     }
 
+    /**
+     * Cosntructor
+     * @param context The context
+     * @param x The x coordinate
+     * @param y The y coordinate
+     * @param team This piece's team
+     */
     public Piece(Context context, int x, int y, int team){
 
         xLoc = x;
@@ -50,6 +67,11 @@ public class Piece implements Parcelable {
         isKing = false;
     }
 
+    /**
+     * Draw function for a piece
+     * @param canvas The canvas object
+     * @param spaceLength The length of the space the piece is in
+     */
     public void draw(Canvas canvas, int spaceLength){
         canvas.save();
 
@@ -94,6 +116,10 @@ public class Piece implements Parcelable {
         return team;
     }
 
+    /**
+     * Load the bitmaps into their respective references
+     * @param context The context
+     */
     private void loadBitmaps(Context context) {
         if(this.team == 0){
             regPiece = BitmapFactory.decodeResource(context.getResources(), R.drawable.white);
@@ -131,19 +157,17 @@ public class Piece implements Parcelable {
     };
 
     /**
-     *
-     * @param currentLength
+     * Adjust the coordinates of the piece based on the new orientation
+     * @param currentLength The length of a square in the current board
+     * @param oldLength The length of a square in the old orientation
      */
     public void adjustCoords(int currentLength, int oldLength) {
 
         int row = xLoc / oldLength;
         int col = yLoc / oldLength;
 
-        xLoc = 0;
-        yLoc = 0;
-
-        xLoc += currentLength * row + currentLength / 2;
-        yLoc += currentLength * col + currentLength / 2;
+        xLoc = currentLength * row + currentLength / 2;
+        yLoc = currentLength * col + currentLength / 2;
 
     }
 }

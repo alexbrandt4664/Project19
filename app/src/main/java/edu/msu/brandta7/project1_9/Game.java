@@ -16,8 +16,6 @@ public class Game implements Parcelable {
 
     private Board board;
 
-    private GameView gameView;
-
     /**
      * Dimension of the view
      */
@@ -88,7 +86,7 @@ public class Game implements Parcelable {
         minDim = width;
 
         boardDim = minDim - 30;
-        spaceLength = (int)(boardDim / 8);
+        spaceLength = boardDim / 8;
 
     }
 
@@ -244,12 +242,7 @@ public class Game implements Parcelable {
      * Change the current player of the game
      */
     public void changeCurrent() {
-        if (current == playerA) {
-            current = playerB;
-        }
-        else {
-            current = playerA;
-        }
+        current = (current == playerA) ? playerB : playerA;
 
         // Reset the move status of the current player
         current.setMove(false);
@@ -258,16 +251,11 @@ public class Game implements Parcelable {
     /**
      * Checks for if the current player lost
      * @return True if the current player lost, false otherwise
-     * TODO Implement this
      */
     public boolean checkWinner() {
 
         // Check whether or not the current player doesn't have pieces
-        if (!current.hasPieces()) {
-            return true;
-        }
-
-        return false;
+        return !current.hasPieces();
     }
 
     public Player getPlayerA() {

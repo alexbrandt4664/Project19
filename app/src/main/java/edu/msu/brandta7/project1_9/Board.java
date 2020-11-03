@@ -1,7 +1,6 @@
 package edu.msu.brandta7.project1_9;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.os.Parcel;
@@ -44,7 +43,64 @@ public class Board implements Parcelable {
         this.minDim = minDim;
         this.spaceLength = spaceLength;
 
-        createBoard(context, game);
+        // Initialize board array
+        for(int i = 0; i < 8; i++)  {
+            board.add(new ArrayList<Node>());
+        }
+
+        int pieceOffset = spaceLength / 2;
+        int x_count = 0;
+        int y_count = 0;
+        int[] locs1 = {1, 5, 7};
+        int[] locs2 = {0, 2, 6};
+        boolean is1 = true;
+        for(int x = pieceOffset; x < this.minDim - pieceOffset - 15; x += spaceLength){
+
+            // Check the column
+            is1 = (x_count + 2) % 2 == 0;
+
+            for(int y = pieceOffset; y < this.minDim - pieceOffset - 15; y += spaceLength){
+                Piece piece = null;
+                Node node = null;
+
+                // If column is loc1 add a piece at those locations
+                if (is1){
+                    for (int i = 0; i < locs1.length; i++){
+                        if(locs1[i] == board.get(x_count).size()){
+                            if(y < (minDim / 2)){
+                                piece = new Piece(context, x, y, 0);
+                                game.getPlayerA().addPiece(piece);
+                            }
+                            else{
+                                piece = new Piece(context, x, y, 1);
+                                game.getPlayerB().addPiece(piece);
+                            }
+                        }
+                    }
+                }
+                // If column is loc2 add a piece at those locations
+                else {
+                    for (int i = 0; i < locs2.length; i++){
+                        if(locs2[i] == board.get(x_count).size()){
+                            if(y < (minDim / 2)){
+                                piece = new Piece(context, x, y, 0);
+                                game.getPlayerA().addPiece(piece);
+                            }
+                            else{
+                                piece = new Piece(context, x, y, 1);
+                                game.getPlayerB().addPiece(piece);
+                            }
+                        }
+                    }
+                }
+
+                node = new Node(x_count, y_count, x, y, false, piece);
+                board.get(x_count).add(node);
+                y_count += 1;
+            }
+            x_count += 1;
+            y_count = 0;
+        }
     }
 
     protected Board(Parcel in) {
@@ -89,11 +145,7 @@ public class Board implements Parcelable {
         Paint color = null;
         int count = 1;
         for (int x = 15; x < minDim - 30; x += spaceLength) {
-            if (count % 2 == 0) {
-                isGrey = true;
-            } else {
-                isGrey = false;
-            }
+            isGrey = count % 2 == 0;
 
             for (int y = 15; y < minDim - 30; y += spaceLength) {
                 if (isGrey) {
@@ -115,7 +167,6 @@ public class Board implements Parcelable {
                     x + spaceLength, y + spaceLength, red);
         }
     }
-
 
     /**
      * Get moves associated with the piece
@@ -414,72 +465,10 @@ public class Board implements Parcelable {
         minDim = min;
     }
 
-    public void createBoard(Context context, Game game) {
-        // Initialize board array
-        for(int i = 0; i < 8; i++)  {
-            board.add(new ArrayList<Node>());
-        }
-
-        int pieceOffset = (int)(spaceLength / 2);
-        int x_count = 0;
-        int y_count = 0;
-        int[] locs1 = {1, 5, 7};
-        int[] locs2 = {0, 2, 6};
-        boolean is1 = true;
-        for(int x = pieceOffset; x < this.minDim - pieceOffset - 15; x += spaceLength){
-
-            // Check the column
-            if((x_count + 2) % 2 == 0) {
-                is1 = true;
-            }
-            else{
-                is1 = false;
-            }
-
-            for(int y = pieceOffset; y < this.minDim - pieceOffset - 15; y += spaceLength){
-                Piece piece = null;
-                Node node = null;
-
-                // If column is loc1 add a piece at those locations
-                if (is1){
-                    for (int i = 0; i < locs1.length; i++){
-                        if(locs1[i] == board.get(x_count).size()){
-                            if(y < (minDim / 2)){
-                                piece = new Piece(context, x, y, 0);
-                                game.getPlayerA().addPiece(piece);
-                            }
-                            else{
-                                piece = new Piece(context, x, y, 1);
-                                game.getPlayerB().addPiece(piece);
-                            }
-                        }
-                    }
-                }
-                // If column is loc2 add a piece at those locations
-                else {
-                    for (int i = 0; i < locs2.length; i++){
-                        if(locs2[i] == board.get(x_count).size()){
-                            if(y < (int)(minDim / 2)){
-                                piece = new Piece(context, x, y, 0);
-                                game.getPlayerA().addPiece(piece);
-                            }
-                            else{
-                                piece = new Piece(context, x, y, 1);
-                                game.getPlayerB().addPiece(piece);
-                            }
-                        }
-                    }
-                }
-
-                node = new Node(x_count, y_count, x, y, false, piece);
-                board.get(x_count).add(node);
-                y_count += 1;
-            }
-            x_count += 1;
-            y_count = 0;
-        }
-    }
-
+    /**
+     * Adjust the coordinates of the nodes on the board
+     * @param oldLength The length of the squares in the old orientation
+     */
     public void adjustCoords(int oldLength) {
         for (int i = 0; i < board.size(); i++) {
             for (int j = 0; j < board.get(i).size(); j++) {

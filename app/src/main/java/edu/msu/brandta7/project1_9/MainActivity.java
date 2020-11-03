@@ -19,7 +19,6 @@ public class MainActivity extends AppCompatActivity {
 
     /**
      * Function to move the players to the game activity
-     * @param view
      */
     public void createGame(View view) {
 
@@ -41,7 +40,6 @@ public class MainActivity extends AppCompatActivity {
 
     /**
      * Function to display a how-to dialog to the players
-     * @param view
      */
     public void showTutorial(View view) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);

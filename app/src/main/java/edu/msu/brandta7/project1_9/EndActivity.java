@@ -19,10 +19,12 @@ public class EndActivity extends AppCompatActivity {
         String loser = getIntent().getExtras().getString(getString(R.string.loserKey));
 
         TextView winnerText = findViewById(R.id.txtWinner);
-        winnerText.setText(winner + " " + winnerText.getText().toString());
+        String winnerMsg = winner + " " + winnerText.getText().toString();
+        winnerText.setText(winnerMsg);
 
         TextView loserText = findViewById(R.id.txtLoser);
-        loserText.setText(loser + " " + loserText.getText().toString());
+        String loserMsg = loser + " " + loserText.getText().toString();
+        loserText.setText(loserMsg);
     }
 
     public void returnPressed(View view) {
